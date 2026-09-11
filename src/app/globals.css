@@ -1,17 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0c0b0a;
-  --ink-soft: #161412;
-  --rice: #f3efe6;
-  --rice-muted: #c8c0b2;
-  --wasabi: #7a9a3a;
-  --wasabi-bright: #a8c85a;
-  --gold: #c4a35a;
-  --gold-soft: #d4b87a;
-  --salmon: #c45c3e;
+  --ink: #050505;
+  --ink-soft: #111111;
+  --paper: #f5f5f5;
+  --paper-muted: #9a9a9a;
+  --red: #e10600;
+  --red-soft: #ff2a22;
+  --red-deep: #8b0000;
   --background: var(--ink);
-  --foreground: var(--rice);
+  --foreground: var(--paper);
 }
 
 @theme inline {
@@ -19,15 +17,14 @@
   --color-foreground: var(--foreground);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
-  --color-rice: var(--rice);
-  --color-rice-muted: var(--rice-muted);
-  --color-wasabi: var(--wasabi);
-  --color-wasabi-bright: var(--wasabi-bright);
-  --color-gold: var(--gold);
-  --color-gold-soft: var(--gold-soft);
-  --color-salmon: var(--salmon);
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-red-deep: var(--red-deep);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 * {
@@ -158,6 +155,50 @@ body {
   animation: grain 1.2s steps(6) infinite;
 }
 
+@keyframes neon-shimmer {
+  0%,
+  100% {
+    opacity: 0.92;
+    filter: brightness(1);
+    text-shadow:
+      0 0 4px #00e5ff,
+      0 0 12px #00e5ff,
+      0 0 28px rgba(0, 229, 255, 0.75),
+      0 0 48px rgba(0, 200, 255, 0.45);
+  }
+  40% {
+    opacity: 1;
+    filter: brightness(1.15);
+    text-shadow:
+      0 0 6px #7ef9ff,
+      0 0 18px #00e5ff,
+      0 0 36px rgba(0, 229, 255, 0.95),
+      0 0 64px rgba(0, 200, 255, 0.65);
+  }
+  55% {
+    opacity: 0.85;
+    filter: brightness(0.95);
+    text-shadow:
+      0 0 3px #00e5ff,
+      0 0 8px rgba(0, 229, 255, 0.7),
+      0 0 20px rgba(0, 229, 255, 0.4);
+  }
+  70% {
+    opacity: 1;
+    filter: brightness(1.2);
+    text-shadow:
+      0 0 8px #fff,
+      0 0 16px #7ef9ff,
+      0 0 32px #00e5ff,
+      0 0 56px rgba(0, 229, 255, 0.8);
+  }
+}
+
+.neon-cokoladni {
+  color: #00e5ff;
+  animation: neon-shimmer 3.2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-rise,
   .anim-rise-delay-1,
@@ -166,7 +207,14 @@ body {
   .anim-line,
   .anim-drift,
   .anim-pulse,
-  .anim-grain {
+  .anim-grain,
+  .neon-cokoladni {
     animation: none;
+  }
+
+  .neon-cokoladni {
+    text-shadow:
+      0 0 6px #00e5ff,
+      0 0 18px rgba(0, 229, 255, 0.7);
   }
 }
