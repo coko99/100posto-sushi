@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0c0b0a;
+  --ink-soft: #161412;
+  --rice: #f3efe6;
+  --rice-muted: #c8c0b2;
+  --wasabi: #7a9a3a;
+  --wasabi-bright: #a8c85a;
+  --gold: #c4a35a;
+  --gold-soft: #d4b87a;
+  --salmon: #c45c3e;
+  --background: var(--ink);
+  --foreground: var(--rice);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rice: var(--rice);
+  --color-rice-muted: var(--rice-muted);
+  --color-wasabi: var(--wasabi);
+  --color-wasabi-bright: var(--wasabi-bright);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-salmon: var(--salmon);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, -1.5%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes line-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-1%, -1%);
+  }
+  20% {
+    transform: translate(1%, 0.5%);
+  }
+  30% {
+    transform: translate(-0.5%, 1%);
+  }
+  40% {
+    transform: translate(0.5%, -0.5%);
+  }
+  50% {
+    transform: translate(-1%, 0.5%);
+  }
+  60% {
+    transform: translate(1%, -1%);
+  }
+  70% {
+    transform: translate(-0.5%, -0.5%);
+  }
+  80% {
+    transform: translate(0.5%, 1%);
+  }
+  90% {
+    transform: translate(-1%, 0);
+  }
+}
+
+.anim-rise {
+  animation: rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-rise-delay-1 {
+  animation-delay: 0.18s;
+}
+
+.anim-rise-delay-2 {
+  animation-delay: 0.36s;
+}
+
+.anim-rise-delay-3 {
+  animation-delay: 0.54s;
+}
+
+.anim-line {
+  transform-origin: left center;
+  animation: line-draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+.anim-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+.anim-pulse {
+  animation: soft-pulse 8s ease-in-out infinite;
+}
+
+.anim-grain {
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-rise-delay-1,
+  .anim-rise-delay-2,
+  .anim-rise-delay-3,
+  .anim-line,
+  .anim-drift,
+  .anim-pulse,
+  .anim-grain {
+    animation: none;
+  }
+}
