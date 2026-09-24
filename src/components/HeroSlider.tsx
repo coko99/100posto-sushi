@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    src: "/images/gallery/susi/susi-01.jpg",
+    src: "/images/menu/dragon-roll.jpg",
     alt: "Suši",
     jp: "寿司",
     title: (
@@ -21,7 +21,7 @@ const slides = [
       "Suši, ramen, bao i topla jela — pažljivo pripremljeni japanski ukusi.",
   },
   {
-    src: "/images/gallery/hrana/hrana-06.jpg",
+    src: "/images/menu/beef-teriyaki.jpg",
     alt: "Topla jela",
     jp: "温",
     title: (
@@ -31,7 +31,33 @@ const slides = [
         Pun ukus.
       </>
     ),
-    subtitle: "Ramen, bao, teriyaki i još mnogo toga — za svaki apetit.",
+    subtitle: "Teriyaki, kari, katsu i još mnogo toga — za svaki apetit.",
+  },
+  {
+    src: "/images/menu/chicken-teriyaki-bao.jpg",
+    alt: "Bao buns",
+    jp: "包",
+    title: (
+      <>
+        Bao buns.
+        <br />
+        Mekani zalogaj.
+      </>
+    ),
+    subtitle: "Zemičke na pari sa junetinom, piletinom ili škampima.",
+  },
+  {
+    src: "/images/menu/beef-ramen.jpg",
+    alt: "Ramen",
+    jp: "麺",
+    title: (
+      <>
+        Ramen.
+        <br />
+        Bogata čorba.
+      </>
+    ),
+    subtitle: "Japanske supe sa nudlama — junetina, vege i još.",
   },
   {
     src: "/images/gallery/ambijent/COK01642.jpg",

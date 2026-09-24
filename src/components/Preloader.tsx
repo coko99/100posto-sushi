@@ -2,117 +2,202 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Word = { jp: string; sr: string };
 
+/** Autentični pojmovi — suši, japanska kuhinja, more, kultura (~100) */
 const WORD_POOL: Word[] = [
+  // Suši & rollovi
   { jp: "寿司", sr: "Suši" },
-  { jp: "新鮮", sr: "Sveže" },
-  { jp: "百％", sr: "100%" },
-  { jp: "美味", sr: "Ukus" },
-  { jp: "一期一会", sr: "Jedan trenutak" },
-  { jp: "ラーメン", sr: "Ramen" },
   { jp: "刺身", sr: "Sašimi" },
-  { jp: "巻", sr: "Roll" },
-  { jp: "和", sr: "Harmonija" },
+  { jp: "握り", sr: "Nigiri" },
+  { jp: "巻物", sr: "Maki" },
+  { jp: "細巻", sr: "Hosomaki" },
+  { jp: "太巻", sr: "Futomaki" },
+  { jp: "裏巻", sr: "Uramaki" },
+  { jp: "手巻", sr: "Temaki" },
+  { jp: "軍艦", sr: "Gunkan" },
+  { jp: "ちらし", sr: "Čiraši" },
+  { jp: "押し寿司", sr: "Oši-zuši" },
+  { jp: "いなり", sr: "Inari" },
+  { jp: "海鮮丼", sr: "Kaisen don" },
+  { jp: "鉄火巻", sr: "Tekka maki" },
+  { jp: "河童巻", sr: "Kapa maki" },
+  { jp: "カリフォルニア", sr: "California" },
+  { jp: "ドラゴンロール", sr: "Dragon roll" },
+  { jp: "レインボー", sr: "Rainbow" },
+  // Topla jela & nudle
+  { jp: "天ぷら", sr: "Tempura" },
+  { jp: "ラーメン", sr: "Ramen" },
+  { jp: "うどん", sr: "Udon" },
+  { jp: "蕎麦", sr: "Soba" },
+  { jp: "豚骨", sr: "Tonkotsu" },
+  { jp: "醤油ラーメン", sr: "Šoja ramen" },
+  { jp: "塩ラーメン", sr: "Šio ramen" },
+  { jp: "つけ麺", sr: "Cukemen" },
+  { jp: "焼きそば", sr: "Jakisoba" },
+  { jp: "焼きうどん", sr: "Jaki udon" },
+  { jp: "丼", sr: "Donburi" },
+  { jp: "カツ丼", sr: "Kacu don" },
+  { jp: "親子丼", sr: "Ojakodon" },
+  { jp: "牛丼", sr: "Gjūdon" },
+  { jp: "天丼", sr: "Tendon" },
+  { jp: "カレー", sr: "Kari" },
+  { jp: "カツカレー", sr: "Kacu kari" },
+  { jp: "照り焼き", sr: "Terijaki" },
+  { jp: "すき焼き", sr: "Sukijaki" },
+  { jp: "しゃぶしゃぶ", sr: "Šabu-šabu" },
+  { jp: "お好み焼き", sr: "Okonomijaki" },
+  { jp: "たこ焼き", sr: "Takojaki" },
+  { jp: "串焼き", sr: "Kušijaki" },
+  { jp: "焼き鳥", sr: "Jakitori" },
+  { jp: "餃子", sr: "Gjoza" },
+  { jp: "包子", sr: "Bao" },
+  { jp: "弁当", sr: "Bento" },
+  { jp: "定食", sr: "Teišoku" },
+  // Supe & predjela
+  { jp: "味噌汁", sr: "Miso supa" },
+  { jp: "赤味噌", sr: "Aka miso" },
+  { jp: "白味噌", sr: "Širo miso" },
+  { jp: "出汁", sr: "Daši" },
+  { jp: "吸い物", sr: "Suimono" },
+  { jp: "茶碗蒸し", sr: "Čavanmuši" },
+  { jp: "枝豆", sr: "Edamame" },
+  { jp: "わかめ", sr: "Wakame" },
+  { jp: "サラダ", sr: "Salata" },
+  { jp: "春巻き", sr: "Prolećne rolnice" },
+  // Sastojci mora
+  { jp: "鮭", sr: "Losos" },
+  { jp: "鮪", sr: "Tuna" },
+  { jp: "大トロ", sr: "O-toro" },
+  { jp: "中トロ", sr: "Ču-toro" },
+  { jp: "赤身", sr: "Akami" },
+  { jp: "海老", sr: "Škampi" },
+  { jp: "鰻", sr: "Unagi" },
+  { jp: "穴子", sr: "Anago" },
+  { jp: "帆立", sr: "Jakobove kapice" },
+  { jp: "いか", sr: "Lignja" },
+  { jp: "たこ", sr: "Hobotnica" },
+  { jp: "いくら", sr: "Ikura" },
+  { jp: "うに", sr: "Uni" },
+  { jp: "ほや", sr: "Hoja" },
+  { jp: "鯖", sr: "Skuša" },
+  { jp: "鯛", sr: "Pagar" },
+  { jp: "ハマチ", sr: "Hamači" },
+  { jp: "ぶり", sr: "Buri" },
+  { jp: "鮎", sr: "Aju" },
+  { jp: "しらす", sr: "Širasu" },
+  // Riža, začini, prilozi
+  { jp: "酢飯", sr: "Suši riža" },
+  { jp: "白米", sr: "Beli pirinač" },
+  { jp: "醤油", sr: "Šoja" },
+  { jp: "わさび", sr: "Wasabi" },
+  { jp: "生姜", sr: "Đumbir" },
+  { jp: "海苔", sr: "Nori" },
+  { jp: "胡麻", sr: "Susam" },
+  { jp: "豆腐", sr: "Tofu" },
+  { jp: "油揚げ", sr: "Aburaage" },
+  { jp: "玉子", sr: "Tamago" },
+  { jp: "玉子焼き", sr: "Tamagojaki" },
+  { jp: "梅干し", sr: "Umeboši" },
+  { jp: "柚子", sr: "Juzu" },
+  { jp: "山葵", sr: "Wasabi" },
+  // Piće & desert
+  { jp: "お茶", sr: "Zeleni čaj" },
+  { jp: "抹茶", sr: "Mača" },
+  { jp: "酒", sr: "Sake" },
+  { jp: "日本酒", sr: "Nišonšu" },
+  { jp: "焼酎", sr: "Šoću" },
+  { jp: "梅酒", sr: "Umešu" },
+  { jp: "餅", sr: "Moči" },
+  { jp: "大福", sr: "Daifuku" },
+  { jp: "あんみつ", sr: "Anmitsu" },
+  { jp: "プリン", sr: "Purin" },
+  // Kultura & osećaj
+  { jp: "日本", sr: "Japan" },
+  { jp: "和食", sr: "Japanska kuhinja" },
+  { jp: "旨味", sr: "Umami" },
+  { jp: "新鮮", sr: "Sveže" },
+  { jp: "旬", sr: "Sezona" },
   { jp: "匠", sr: "Majstor" },
-  { jp: "職人", sr: "Zanat" },
-  { jp: "情熱", sr: "Strast" },
-  { jp: "禅", sr: "Zen" },
-  { jp: "桜", sr: "Sakura" },
+  { jp: "板前", sr: "Itamae" },
+  { jp: "職人", sr: "Zanatlija" },
+  { jp: "百％", sr: "100%" },
+  { jp: "美味", sr: "Ukusno" },
+  { jp: "乾杯", sr: "Kanpai" },
+  { jp: "一期一会", sr: "Jedan trenutak" },
+  { jp: "おもてなし", sr: "Gostoprimstvo" },
   { jp: "海", sr: "More" },
   { jp: "魚", sr: "Riba" },
-  { jp: "炎", sr: "Plamen" },
-  { jp: "心", sr: "Srce" },
-  { jp: "絆", sr: "Veza" },
-  { jp: "食", sr: "Jelo" },
-  { jp: "旨い", sr: "Ukusno" },
-  { jp: "乾杯", sr: "Živeli" },
-  { jp: "季節", sr: "Sezona" },
+  { jp: "和", sr: "Wa" },
+  { jp: "禅", sr: "Zen" },
+  { jp: "心", sr: "Kokoro" },
   { jp: "伝統", sr: "Tradicija" },
-  { jp: "静寂", sr: "Tišina" },
-  { jp: "調和", sr: "Ravnoteža" },
-  { jp: "夢", sr: "San" },
-  { jp: "風", sr: "Vetar" },
-  { jp: "水", sr: "Voda" },
-  { jp: "火", sr: "Vatra" },
-  { jp: "月光", sr: "Mesečina" },
-  { jp: "黄金", sr: "Zlato" },
-  { jp: "宝", sr: "Blago" },
-  { jp: "無限", sr: "Beskonačno" },
-  { jp: "食欲", sr: "Apetit" },
-  { jp: "満腹", sr: "Sitost" },
-  { jp: "酒", sr: "Sake" },
-  { jp: "茶", sr: "Čaj" },
-  { jp: "丼", sr: "Donburi" },
-  { jp: "温度", sr: "Toplina" },
-  { jp: "花", sr: "Cvet" },
-  { jp: "空", sr: "Nebo" },
-  { jp: "土", sr: "Zemlja" },
-  { jp: "魂", sr: "Duša" },
-  { jp: "瞬間", sr: "Tren" },
-  { jp: "芸術", sr: "Umetnost" },
   { jp: "完璧", sr: "Savršeno" },
-  { jp: "喜び", sr: "Radost" },
 ];
 
-const HOLD_FIRST_MS = 420;
-const HOLD_NAV_MS = 380;
-const FADE_MS = 140;
-const EXIT_MS = 420;
+const WORDS_PER_RUN = 3;
+/** Ukupno ~2s: 3×hold + 2×fade + exit */
+const HOLD_MS = 480;
+const FADE_MS = 160;
+const EXIT_MS = 400;
+const RECENT_KEY = "100posto-preloader-recent";
+const RECENT_MAX = 40;
 
-function pickWords(count: number, excludeJp?: string): Word[] {
-  const pool = [...WORD_POOL];
+function readRecent(): string[] {
+  try {
+    const raw = sessionStorage.getItem(RECENT_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed)
+      ? parsed.filter((x): x is string => typeof x === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeRecent(jpList: string[]) {
+  try {
+    const next = [...jpList, ...readRecent()]
+      .filter((v, i, arr) => arr.indexOf(v) === i)
+      .slice(0, RECENT_MAX);
+    sessionStorage.setItem(RECENT_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+}
+
+function pickWords(count: number): Word[] {
+  const recent = new Set(readRecent());
+  const fresh = WORD_POOL.filter((w) => !recent.has(w.jp));
+  const pool = [...(fresh.length >= count ? fresh : WORD_POOL)];
+
   for (let i = pool.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  const picked = pool.filter((w) => w.jp !== excludeJp).slice(0, count);
-  while (picked.length < count) {
-    const extra = pool.find((w) => !picked.includes(w));
-    if (!extra) break;
-    picked.push(extra);
-  }
+
+  const picked = pool.slice(0, count);
+  writeRecent(picked.map((w) => w.jp));
   return picked;
 }
 
+/** Remount na svaku rutu — garantuje preloader pri svakom prelasku */
 export function Preloader() {
   const pathname = usePathname();
-  const [visible, setVisible] = useState(false);
+  return <PreloaderRun key={pathname} />;
+}
+
+function PreloaderRun() {
+  const [words] = useState(() => pickWords(WORDS_PER_RUN));
+  const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
-  const [words, setWords] = useState<Word[]>([]);
   const [wordIndex, setWordIndex] = useState(0);
   const [wordVisible, setWordVisible] = useState(true);
-  const [runId, setRunId] = useState(0);
-  const [holdMs, setHoldMs] = useState(HOLD_FIRST_MS);
-  const lastPath = useRef<string | null>(null);
-  const lastFirstJp = useRef<string | undefined>(undefined);
-  const isFirstRun = useRef(true);
 
   useEffect(() => {
-    if (lastPath.current === pathname) return;
-    lastPath.current = pathname;
-
-    const first = isFirstRun.current;
-    isFirstRun.current = false;
-    // Prvi ulazak: 2 reči. Prelasci: 1 brza reč.
-    const count = first ? 2 : 1;
-    const next = pickWords(count, lastFirstJp.current);
-    lastFirstJp.current = next[0]?.jp;
-
-    setHoldMs(first ? HOLD_FIRST_MS : HOLD_NAV_MS);
-    setWords(next);
-    setWordIndex(0);
-    setWordVisible(true);
-    setExiting(false);
-    setVisible(true);
-    setRunId((n) => n + 1);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!visible || exiting || words.length === 0) return;
-
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -149,7 +234,7 @@ export function Preloader() {
           setWordVisible(true);
           cycle();
         }, FADE_MS);
-      }, holdMs);
+      }, HOLD_MS);
     };
 
     cycle();
@@ -159,9 +244,9 @@ export function Preloader() {
       timers.forEach((id) => window.clearTimeout(id));
       document.body.style.overflow = prevOverflow;
     };
-  }, [visible, exiting, runId, words, holdMs]);
+  }, [words.length]);
 
-  if (!visible || words.length === 0) return null;
+  if (!visible) return null;
 
   const current = words[wordIndex] ?? words[0];
   if (!current) return null;
@@ -186,8 +271,8 @@ export function Preloader() {
 
         <div className="relative flex h-[6.5rem] items-center justify-center sm:h-[8rem]">
           <p
-            key={`${runId}-${current.jp}`}
-            className={`font-jp text-[clamp(3rem,12vw,5.5rem)] font-normal leading-none tracking-[0.06em] transition-all duration-300 ${
+            key={current.jp}
+            className={`font-jp text-[clamp(2.6rem,11vw,5rem)] font-normal leading-none tracking-[0.06em] transition-all duration-300 ${
               wordVisible
                 ? "translate-y-0 scale-100 opacity-100"
                 : "translate-y-2 scale-95 opacity-0"

@@ -12,7 +12,7 @@ export function BrandLogo({
   size = 48,
   className = "",
   priority = false,
-  href = "/pocetna",
+  href = "/",
 }: BrandLogoProps) {
   const image = (
     <Image

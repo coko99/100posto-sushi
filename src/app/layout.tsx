@@ -25,16 +25,16 @@ const jp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "100% Sushi Bar — Uskoro",
+  title: "100% Sushi Bar — Kruševac",
   description:
-    "100% Sushi Bar. Sveže. Precizno. Uskoro otvaramo — coming soon.",
+    "100% Sushi Bar — sveže suši, ramen, bao i topla jela u Kruševcu. Naruči dostavu ili rezerviši sto.",
   icons: {
     icon: "/images/logo.jpg",
     apple: "/images/logo.jpg",
   },
   openGraph: {
-    title: "100% Sushi Bar — Uskoro",
-    description: "Sveže. Precizno. Uskoro otvaramo.",
+    title: "100% Sushi Bar — Kruševac",
+    description: "Sveže. Precizno. Autentično. Suši bar u Kruševcu.",
     type: "website",
     images: [{ url: "/images/logo.jpg" }],
   },

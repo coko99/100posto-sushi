@@ -155,5 +155,6 @@ export const categoryIconIdForPreview: Record<string, string> = {
   "Bao buns": "bao",
   "Topla jela": "main-dishes",
   "Supe & Salate": "soups",
+  Predjela: "starters",
   Deserti: "desserts",
 };

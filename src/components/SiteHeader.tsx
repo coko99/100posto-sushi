@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "/pocetna", label: "Početna", jp: "ホーム" },
+  { href: "/", label: "Početna", jp: "ホーム" },
   { href: "/o-nama", label: "O nama", jp: "私たち" },
   { href: "/jelovnik", label: "Jelovnik", jp: "メニュー" },
   { href: "/galerija", label: "Galerija", jp: "写真" },
@@ -40,7 +40,7 @@ export function SiteHeader() {
       <header className="sticky top-0 z-40 border-b border-ink/8 bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-2.5 sm:px-8">
           <Link
-            href="/pocetna"
+            href="/"
             className="group flex items-center gap-3"
             aria-label="100% Sushi Bar"
           >
@@ -142,7 +142,7 @@ export function SiteHeader() {
         >
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
             <div className="flex items-center gap-3">
-              <BrandLogo size={44} className="h-11 w-11" href="/pocetna" />
+              <BrandLogo size={44} className="h-11 w-11" href="/" />
               <span className="font-jp text-sm tracking-[0.2em] text-white/40">
                 寿司
               </span>

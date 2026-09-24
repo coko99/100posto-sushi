@@ -5,6 +5,10 @@ import {
 import { FeatureIcon } from "@/components/FeatureIcon";
 import { HeroSlider } from "@/components/HeroSlider";
 import { JpMark, SectionEyebrow } from "@/components/JpType";
+import {
+  MenuPreviewCard,
+  type MenuPreviewItem,
+} from "@/components/MenuPreviewCard";
 import { homeFoodStrip } from "@/lib/gallery";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,55 +40,77 @@ const features = [
   },
 ];
 
-const menuPreview = [
+const menuPreview: MenuPreviewItem[] = [
   {
     href: "/jelovnik#hosomaki",
     title: "Sushi & Maki",
     jp: "寿司",
     desc: "Klasični i specijal rollovi, hosomaki i futomaki.",
-    image: "/images/gallery/susi/susi-02.jpg",
+    images: [
+      "/images/menu/dragon-roll.jpg",
+      "/images/menu/philadelphia-roll.jpg",
+      "/images/menu/rainbow-roll.jpg",
+    ],
   },
   {
     href: "/jelovnik#ramen",
     title: "Ramen",
     jp: "麺",
     desc: "Bogate japanske supe sa nudlama.",
-    image: "/images/gallery/hrana/hrana-08.jpg",
+    images: [
+      "/images/menu/beef-ramen.jpg",
+      "/images/menu/tonkotsu-ramen.jpg",
+      "/images/menu/vege-ramen.jpg",
+    ],
   },
   {
     href: "/jelovnik#bao",
     title: "Bao buns",
     jp: "包",
     desc: "Meke zemičke na pari sa punjenjem.",
-    image: "/images/gallery/hrana/hrana-04.jpg",
+    images: [
+      "/images/menu/chicken-teriyaki-bao.jpg",
+      "/images/menu/spicy-beef-bao.jpg",
+      "/images/menu/mango-shrimp-bao.jpg",
+    ],
   },
   {
     href: "/jelovnik#main-dishes",
     title: "Topla jela",
     jp: "温",
     desc: "Teriyaki, kari, katsu i još mnogo toga.",
-    image: "/images/gallery/hrana/hrana-06.jpg",
+    images: [
+      "/images/menu/beef-teriyaki.jpg",
+      "/images/menu/tori-katsu.jpg",
+      "/images/menu/thai-yellow-curry.jpg",
+    ],
   },
   {
     href: "/jelovnik#soups",
     title: "Supe & Salate",
     jp: "汁",
     desc: "Osvežavajući početak ili lagani obrok.",
-    image: "/images/gallery/hrana/hrana-01.jpg",
+    images: [
+      "/images/menu/tom-yum-shrimp.jpg",
+      "/images/menu/shiro-miso.jpg",
+      "/images/menu/thai-noodle-salad.jpg",
+    ],
   },
   {
-    href: "/jelovnik#desserts",
-    title: "Deserti",
-    jp: "甘",
-    desc: "Japanski deserti za završetak.",
-    image: "/images/gallery/hrana/hrana-11.jpg",
+    href: "/jelovnik#starters",
+    title: "Predjela",
+    jp: "前",
+    desc: "Gyoza, edamame, crispy shrimps i još.",
+    images: [
+      "/images/menu/chicken-gyoza.jpg",
+      "/images/menu/edamame-classic.jpg",
+      "/images/menu/crispy-shrimps.jpg",
+    ],
   },
 ];
 
 export default function PocetnaPage() {
-  // Jedan set + duplikat samo za beskonačan loop (manje DOM čvorova)
-  const stripSource = homeFoodStrip.slice(0, 8);
-  const stripItems = [...stripSource, ...stripSource];
+  const stripItems = [...homeFoodStrip, ...homeFoodStrip];
 
   return (
     <div>
@@ -96,7 +122,7 @@ export default function PocetnaPage() {
             {stripItems.map((item, index) => (
               <Link
                 key={`${item.src}-${index}`}
-                href="/galerija"
+                href="/jelovnik"
                 className="group relative h-32 w-24 shrink-0 overflow-hidden sm:h-44 sm:w-36 md:h-52 md:w-40"
               >
                 <Image
@@ -190,42 +216,18 @@ export default function PocetnaPage() {
 
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {menuPreview.map((item) => (
-              <Link
+              <MenuPreviewCard
                 key={item.title}
-                href={item.href}
-                className="group relative block overflow-hidden bg-ink"
-              >
-                <div className="relative aspect-[4/5]">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 50vw, 33vw"
+                item={item}
+                icon={
+                  <CategoryIcon
+                    id={
+                      categoryIconIdForPreview[item.title] ?? "hosomaki"
+                    }
+                    className="h-8 w-8"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-transparent" />
-                  <span className="absolute right-4 top-4 font-jp text-3xl text-white/25 transition-colors group-hover:text-red/70">
-                    {item.jp}
-                  </span>
-                </div>
-                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center text-white/80">
-                    <CategoryIcon
-                      id={categoryIconIdForPreview[item.title] ?? "hosomaki"}
-                      className="h-8 w-8"
-                    />
-                  </div>
-                  <h3 className="font-[family-name:var(--font-body)] text-base font-semibold uppercase tracking-[0.1em] text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 max-w-[18rem] font-[family-name:var(--font-body)] text-sm leading-relaxed text-white/55">
-                    {item.desc}
-                  </p>
-                  <span className="mt-4 inline-block font-[family-name:var(--font-body)] text-[0.68rem] uppercase tracking-[0.16em] text-red">
-                    Pogledaj →
-                  </span>
-                </div>
-              </Link>
+                }
+              />
             ))}
           </div>
         </div>
@@ -235,7 +237,7 @@ export default function PocetnaPage() {
         <div className="mx-auto grid max-w-6xl lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative min-h-[22rem] lg:min-h-[28rem]">
             <Image
-              src="/images/gallery/susi/susi-06.jpg"
+              src="/images/menu/volcano-roll.jpg"
               alt="Suši"
               fill
               className="object-cover"

@@ -5,7 +5,7 @@ import { siteContact } from "@/lib/contact";
 import Link from "next/link";
 
 const nav = [
-  { href: "/pocetna", label: "Početna" },
+  { href: "/", label: "Početna" },
   { href: "/jelovnik", label: "Jelovnik" },
   { href: "/galerija", label: "Galerija" },
   { href: "/kontakt", label: "Kontakt" },

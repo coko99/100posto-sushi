@@ -58,18 +58,18 @@ export const galleryCategories: GalleryCategory[] = [
   { id: "basta", label: "Bašta", images: basta },
 ];
 
-/** Rolling strip on Početna — food + sushi mix */
+/** Rolling strip on Početna — prava jela iz menija */
 export const homeFoodStrip = [
-  susi[0],
-  hrana[0],
-  susi[2],
-  hrana[5],
-  susi[5],
-  hrana[2],
-  susi[8],
-  hrana[8],
-  susi[3],
-  hrana[10],
-  susi[10],
-  hrana[3],
+  { src: "/images/menu/dragon-roll.jpg", alt: "Dragon roll" },
+  { src: "/images/menu/chicken-teriyaki-bao.jpg", alt: "Bao bun" },
+  { src: "/images/menu/beef-ramen.jpg", alt: "Beef ramen" },
+  { src: "/images/menu/beef-teriyaki.jpg", alt: "Beef teriyaki" },
+  { src: "/images/menu/philadelphia-roll.jpg", alt: "Philadelphia roll" },
+  { src: "/images/menu/spicy-beef-bao.jpg", alt: "Spicy beef bao" },
+  { src: "/images/menu/tori-katsu.jpg", alt: "Tori katsu" },
+  { src: "/images/menu/rainbow-roll.jpg", alt: "Rainbow roll" },
+  { src: "/images/menu/mango-shrimp-bao.jpg", alt: "Mango shrimp bao" },
+  { src: "/images/menu/thai-yellow-curry.jpg", alt: "Thai yellow curry" },
+  { src: "/images/menu/crispy-shrimps.jpg", alt: "Crispy shrimps" },
+  { src: "/images/menu/volcano-roll.jpg", alt: "Volcano roll" },
 ];

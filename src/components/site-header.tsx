@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
-  { href: "/pocetna", label: "Početna" },
+  { href: "/", label: "Početna" },
   { href: "/o-nama", label: "O nama" },
   { href: "/jelovnik", label: "Jelovnik" },
   { href: "/galerija", label: "Galerija" },
@@ -20,7 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 sm:px-10">
         <Link
-          href="/pocetna"
+          href="/"
           className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-[-0.04em] text-paper"
         >
           100%
